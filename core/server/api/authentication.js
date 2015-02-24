@@ -48,7 +48,8 @@ authentication = {
             }).then(function (resetToken) {
                 var baseUrl = config.forceAdminSSL ? (config.urlSSL || config.url) : config.url,
                     resetUrl = baseUrl.replace(/\/$/, '') + '/ghost/reset/' + globalUtils.encodeBase64URLsafe(resetToken) + '/';
-
+                console.log(resetUrl);
+                
                 return mail.generateContent({data: {resetUrl: resetUrl}, template: 'reset-password'});
             }).then(function (emailContent) {
                 var payload = {

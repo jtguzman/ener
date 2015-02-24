@@ -1,0 +1,31 @@
+<script>
+  {{> 'config'}}
+
+
+  !function() {
+    styleTag = document.getElementById('defaultStyle')
+    
+    // isolate version string into variable (version string added by Ghost)
+    // to preserve proper cache busting
+    var styleHref = styleTag.getAttribute('href')
+    var getVersion = /\?(.*)$/
+    assetVersionOb = styleHref.match(getVersion)
+    assetVersion = assetVersionOb[0]
+
+    // get path, initiate activeStyle
+    assetPath = styleHref.substr(0, styleHref.lastIndexOf('/'))
+    var activeStyle
+
+    if ( window.demoOn ) {
+      var DEMOthemeLight_or_dark  = localStorage.getItem('DEMOthemeLight_or_dark')
+      var DEMOthemeColor          = localStorage.getItem('DEMOthemeColor')
+      activeStyle = assetPath + '/global-style_' + DEMOthemeLight_or_dark + '--' + DEMOthemeColor + '.min.css' + assetVersion
+
+    } else {    
+      activeStyle = assetPath + '/global-style_' + themeLight_or_dark + '--' + themeColor + '.min.css' + assetVersion
+    }
+
+    styleTag.setAttribute('href', activeStyle)
+    
+  }()
+</script>
